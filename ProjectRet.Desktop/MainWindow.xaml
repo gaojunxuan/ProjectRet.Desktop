@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectRet.Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="350" ResizeMode="CanMinimize">
+        Title="ProjectRet" Height="350" Width="350" ResizeMode="CanMinimize">
     <Grid Background="#FF0078D7">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,40">
             <TextBlock Text="Your code is" Foreground="White" FontSize="22" TextAlignment="Center" FontWeight="Light"></TextBlock>

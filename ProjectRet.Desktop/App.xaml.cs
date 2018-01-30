@@ -83,7 +83,7 @@ namespace ProjectRet.Desktop
                                 //[HKEY_CLASSES_ROOT\com.aruntalkstech.wpf\shell\open\command]
                                 using (var commandKey = openKey.CreateSubKey("command"))
                                 {
-                                    commandKey.SetValue(string.Empty, Assembly.GetExecutingAssembly().Location + " \"%1\"");
+                                    commandKey.SetValue(string.Empty, Assembly.GetExecutingAssembly().Location + " %1");
                                     commandKey.Close();
                                 }
 
