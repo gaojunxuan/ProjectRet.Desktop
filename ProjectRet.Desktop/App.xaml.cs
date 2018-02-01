@@ -25,6 +25,7 @@ namespace ProjectRet.Desktop
                 Uri argUri;
                 string command = "";
                 string pass = "";
+                string key = "";
                 if (Uri.TryCreate(args[1], UriKind.Absolute, out argUri))
                 {
                     var decoder = new WwwFormUrlDecoder(argUri.Query);
@@ -36,16 +37,18 @@ namespace ProjectRet.Desktop
                                 command = entry.Value;
                             else if (entry.Name == "auth")
                                 pass = entry.Value;
+                            else if (entry.Name == "key")
+                                key = entry.Value;
                         }
                     }
                     switch (command)
                     {
                         case "shutdown":
-                            if (await PasscodeHelper.Auth(pass))
+                            if (await PasscodeHelper.Auth(pass,key))
                                 ShutdownHelper.ShutdownSystem();
                             break;
                         case "reboot":
-                            if (await PasscodeHelper.Auth(pass))
+                            if (await PasscodeHelper.Auth(pass,key))
                                 ShutdownHelper.RebootSystem();
                             break;
 
