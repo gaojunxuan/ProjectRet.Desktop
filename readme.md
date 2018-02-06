@@ -16,7 +16,7 @@ However, to achieve remote control, we still need a client on the controlled dev
 Since the client will expose a URL protocol publicly, there might be some security risks, we use a security key and device GUID as credentials to prevent your devices from attack.
 
 As for the controller side, we used Windows Hello for authentication. Before enter the controller console, user must enter there PIN or login with fingerprint or facial recognition.
-![Screenshot--38-](Screenshot (38).png)
+![Screenshot--38-](Screenshot%20(38).png)
 
 ## User guide
 
