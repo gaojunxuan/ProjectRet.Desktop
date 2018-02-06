@@ -16,7 +16,7 @@ However, to achieve remote control, we still need a client on the controlled dev
 Since the client will expose a URL protocol publicly, there might be some security risks, we use a security key and device GUID as credentials to prevent your devices from attack.
 
 As for the controller side, we used Windows Hello for authentication. Before enter the controller console, user must enter there PIN or login with fingerprint or facial recognition.
-![Screenshot--38-](http://skylark-workshop.xyz/blog/content/images/2018/02/Screenshot--38-.png)
+![Screenshot--38-](Screenshot--38-.png)
 
 ## User guide
 
@@ -25,13 +25,13 @@ As for the controller side, we used Windows Hello for authentication. Before ent
 Install the Project Ret client.
 
 You can see a 8-character key on the popup window.
-![Screenshot--37-](https://skylark-workshop.xyz/blog/content/images/2018/02/Screenshot--37-.png)
+![Screenshot--37-](Screenshot--37-.png)
 
 ### Install and configure the controller client
 
 Find the device name of the device you want to control and tap the "Setup" button.
 
 Enter the 8-character key (case sensitive).
-![Screenshot--39-](https://skylark-workshop.xyz/blog/content/images/2018/02/Screenshot--39-.png)
-![Screenshot--40-](https://skylark-workshop.xyz/blog/content/images/2018/02/Screenshot--40-.png)
+![Screenshot--39-](Screenshot--39-.png)
+![Screenshot--40-](Screenshot--40-.png)
 
