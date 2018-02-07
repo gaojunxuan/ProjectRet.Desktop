@@ -25,6 +25,7 @@ namespace ProjectRet.Desktop
                 Uri argUri;
                 string command = "";
                 string pass = "";
+                string key = "";
                 if (Uri.TryCreate(args[1], UriKind.Absolute, out argUri))
                 {
                     var decoder = new WwwFormUrlDecoder(argUri.Query);
@@ -36,20 +37,26 @@ namespace ProjectRet.Desktop
                                 command = entry.Value;
                             else if (entry.Name == "auth")
                                 pass = entry.Value;
+                            else if (entry.Name == "key")
+                                key = entry.Value;
                         }
                     }
                     switch (command)
                     {
                         case "shutdown":
-                            if (await PasscodeHelper.Auth(pass))
+                            if (await PasscodeHelper.Auth(pass, key))
                                 ShutdownHelper.ShutdownSystem();
+                            else
+                                MessageBox.Show("Authentication failed", "Error");
                             break;
                         case "reboot":
-                            if (await PasscodeHelper.Auth(pass))
+                            if (await PasscodeHelper.Auth(pass,key))
                                 ShutdownHelper.RebootSystem();
+                            else
+                                MessageBox.Show("Authentication failed", "Error");
                             break;
-
                     }
+                    App.Current.Shutdown();
                 }
             }
         }
@@ -59,7 +66,37 @@ namespace ProjectRet.Desktop
             {
                 if (hkcr.GetSubKeyNames().Contains("projectret"))
                 {
-                    return;
+                    using (var schemeKey = hkcr.OpenSubKey("projectret"))
+                    {
+                        if(schemeKey.GetSubKeyNames().Contains("shell"))
+                        {
+                            using (var shellKey=schemeKey.OpenSubKey("shell"))
+                            {
+                                if (shellKey.GetSubKeyNames().Contains("open"))
+                                {
+                                    using (var openKey=shellKey.OpenSubKey("open"))
+                                    {
+                                        if (openKey.GetSubKeyNames().Contains("command"))
+                                        {
+                                            using (var commandKey=openKey.OpenSubKey("command"))
+                                            {
+                                                var value = Assembly.GetExecutingAssembly().Location + " %1";
+                                                if (string.Equals(commandKey.GetValue(string.Empty),value))
+                                                {
+                                                    return;
+                                                }
+                                                commandKey.Close();
+                                            }
+                                        }
+                                        openKey.Close();
+                                    }
+                                }
+                                shellKey.Close();
+                            }
+                        }
+                        schemeKey.Close();
+                    }
+
                 }
                 if (!PrivilegeHelper.IsRunAsAdmin())
                 {

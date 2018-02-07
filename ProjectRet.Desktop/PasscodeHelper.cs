@@ -39,19 +39,26 @@ namespace ProjectRet.Desktop
                 await outputFile.WriteAsync(Base64Encode(password));
             }
         }
-        internal static async Task<bool> Auth(string password)
+        internal static async Task<bool> Auth(string password,string key)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
-            if(File.Exists(path + @"\credentials.txt"))
+            var system = await Windows.System.RemoteSystems.RemoteSystem.FindByHostNameAsync(new Windows.Networking.HostName("127.0.0.1"));
+            if(system!=null)
             {
-                using (StreamReader sr = new StreamReader(path + @"\credentials.txt"))
+                if(string.Equals(system.Id,key))
                 {
-                    // Read the stream to a string, and write the string to the console.
-                    String line = await sr.ReadToEndAsync();
-                    if (line == Base64Encode(password))
-                        return true;
+                    if (File.Exists(path + @"\credentials.txt"))
+                    {
+                        using (StreamReader sr = new StreamReader(path + @"\credentials.txt"))
+                        {
+                            // Read the stream to a string, and write the string to the console.
+                            String line = await sr.ReadToEndAsync();
+                            if (line == Base64Encode(password))
+                                return true;
+                        }
+                    }
                 }
-            }
+            }            
             return false;
         }
         internal static async Task<string> GetPassword()
